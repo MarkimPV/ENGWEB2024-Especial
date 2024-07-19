@@ -1,0 +1,6 @@
+1. db.listas.countDocuments({"produtos.designacao": "Broa"})
+2. db.listas.find({"produtos.designacao": "Nabos"})
+3. db.listas.aggregate([{ $unwind: "$produtos" }, { $group: { _id: null, categorias: { $addToSet: "$produtos.categoria" } } },{ $project: { _id: 0, categorias: 1 }}, { $unwind: "$categorias" }, { $sort: { categorias: 1 } }])
+4. db.listas.aggregate([{ $unwind: "$produtos" }, { $group: { _id: "$produtos.categoria", produtos: { $addToSet: "$produtos.designacao" } } }, { $project: { _id: 1, numero_de_produtos: { $size: "$produtos" } } }])
+5. db.listas.aggregate([{ $unwind: "$produtos" }, { $match: { "produtos.designacao": "Batata" } }, { $project: { _id: 1, data: 1 } }, { $sort: { data: 1 }}
+
